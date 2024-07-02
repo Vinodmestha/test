@@ -1,18 +1,14 @@
 "use client"
+import { useAuth } from "@/Context/AuthContext";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-    const [login, setLogin] = useState(false)
-    useEffect(() => {
-        const token = localStorage.getItem("auth")
-        if (token) {
-            setLogin(token)
-        }
-    })
-    const logout = () => {
-        localStorage.clear("auth")
-        setLogin(!login);
+    let { user, logout } = useAuth()
+    const router = useRouter()
+    const handleLogout = () => {
+        logout;
+        router("/")
     }
     return (
         <nav className="bg-gray-200 shadow shadow-gray-300 w-full px-8 md:px-auto">
@@ -30,15 +26,16 @@ export default function Navbar() {
                     <ul className="flex font-semibold justify-between">
                         {/* <!-- Active Link = text-indigo-500
                 Inactive Link = hover:text-indigo-500 --> */}
-                        <li className="md:px-4 md:py-2 text-indigo-500"><a href="#">Dashboard</a></li>
-                        <li className="md:px-4 md:py-2 hover:text-indigo-400"><a href="#">Search</a></li>
+                        <li className="md:px-4 md:py-2 text-indigo-500"><a href="/admin">Dashboard</a></li>
+                        <li className="md:px-4 md:py-2 hover:text-indigo-400"><a href="/category">Search</a></li>
                         <li className="md:px-4 md:py-2 hover:text-indigo-400"><a href="#">Explore</a></li>
                         <li className="md:px-4 md:py-2 hover:text-indigo-400"><a href="#">About</a></li>
                         <li className="md:px-4 md:py-2 hover:text-indigo-400"><a href="#">Contact</a></li>
                     </ul>
                 </div>
+
                 <div className="order-2 md:order-3">
-                    {login ? <h4 onClick={logout}>Logout</h4> :
+                    {user ? <h4 onClick={handleLogout}>Logout</h4> :
                         <Link href={"/signin"} className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl flex items-center gap-2">
                             {/* <!-- Heroicons - Login Solid --> */}
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

@@ -10,14 +10,11 @@ const MultiPassenger = () => {
     // Validate inputs
     const validate = (index, name, value) => {
         let error = '';
-        // if (name === "name") {
-        //     if (!value) {
-        //         error = "field is required"
-        //     }
-        // }else if(name===""){
-
-        // }
-        setErrors([...errors], { [name]: !value ? error = "Field is required" : "" })
+        if (name === "name") {
+            if (value?.length > 1 && value?.length < 3) {
+                error = "field is required"
+            }
+        }
         let updateError = [...errors]
         if (!updateError[index]) {
             updateError[index] = {}
@@ -32,6 +29,14 @@ const MultiPassenger = () => {
         const { value, name } = event.target;
         let updateUsers = [...users]
         updateUsers[index][name] = value
+        console.log(updateUsers[index])
+
+        if (updateUsers[index].name === "") {
+            updateUsers[index]["lname"] = true
+        } else {
+            delete updateUsers[index]["lname"]
+        }
+
         setUsers(updateUsers)
         validate(index, name, value)
     }
@@ -62,7 +67,7 @@ const MultiPassenger = () => {
             })
         })
         if (valid) {
-            console.log("successfully submit")
+            console.log("successfully submit", users)
         }
     };
 
