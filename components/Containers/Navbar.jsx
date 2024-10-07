@@ -26,7 +26,7 @@ export default function Navbar() {
                     <ul className="flex font-semibold justify-between">
                         {/* <!-- Active Link = text-indigo-500
                 Inactive Link = hover:text-indigo-500 --> */}
-                        <li className="md:px-4 md:py-2 text-indigo-500"><a href="/admin">Dashboard</a></li>
+                        <li className="md:px-4 md:py-2 text-indigo-500"><a href="/dashboard">Dashboard</a></li>
                         <li className="md:px-4 md:py-2 hover:text-indigo-400"><a href="/category">Search</a></li>
                         <li className="md:px-4 md:py-2 hover:text-indigo-400"><a href="#">Explore</a></li>
                         <li className="md:px-4 md:py-2 hover:text-indigo-400"><a href="#">About</a></li>
