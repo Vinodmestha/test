@@ -1,11 +1,9 @@
 "use client"
 
-import { useAuth } from "@/Context/AuthContext"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export default function SignIn() {
-    const { login } = useAuth()
     const router = useRouter()
 
     const [state, setState] = useState({
@@ -14,28 +12,47 @@ export default function SignIn() {
     })
 
     const { username, password } = state
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        fetch('https://fakestoreapi.com/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: 'mor_2314',
-                password: "83r5^_"
-            })
-        })
-            .then(res => res.json())
-            .then((res) => {
-                let tokenKey = res?.token
-                let userData = {
-                    username: username,
-                    token: tokenKey
-                }
-                login(userData);
-                router.push("/")
-            })
+    // const handleSubmit = (e) => {
+    //     e.preventDefault()
+    //     fetch('https://fakestoreapi.com/auth/login', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             username: 'mor_2314',
+    //             password: "83r5^_"
+    //         })
+    //     })
+    //         .then(res => res.json())
+    //         .then((res) => {
+    //             let tokenKey = res?.token
+    //             let userData = {
+    //                 username: username,
+    //                 token: tokenKey
+    //             }
+    //             login(userData);
+    //             router.push("/")
+    //         })
+    // }
+    const handleSubmit2 = async () => {
+        try {
+            let url = 'https://fakestoreapi.com/auth/login'
+            let response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: 'mor_2314',
+                    password: "83r5^_",
+                })
+            });
+            let data = await response.json();
+            console.log(data)
+        } catch (err) {
+            console.log(err)
+        }
     }
     const loginInfo = [
         { name: "username", type: "text", placeholder: "User Name", label: "User Name", value: username },
@@ -81,7 +98,7 @@ export default function SignIn() {
 
                     <div>
                         <button
-                            onClick={(e) => handleSubmit(e)}
+                            onClick={(e) => handleSubmit2(e)}
                             type="submit"
                             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
