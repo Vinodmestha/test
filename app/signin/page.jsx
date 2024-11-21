@@ -1,5 +1,7 @@
 "use client"
 
+import axios from "axios"
+import next from "next"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -12,6 +14,8 @@ export default function SignIn() {
     })
 
     const { username, password } = state
+
+    //api call with promise .then
     // const handleSubmit = (e) => {
     //     e.preventDefault()
     //     fetch('https://fakestoreapi.com/auth/login', {
@@ -35,25 +39,45 @@ export default function SignIn() {
     //             router.push("/")
     //         })
     // }
-    const handleSubmit2 = async () => {
+
+    // api call with async await
+    // const handleSubmit2 = async () => {
+    //     try {
+    //         let url = 'https://fakestoreapi.com/auth/login'
+    //         let response = await fetch(url, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-type": "application/json"
+    //             },
+    //             body: JSON.stringify({
+    //                 username: 'mor_2314',
+    //                 password: "83r5^_",
+    //             })
+    //         });
+    //         let data = await response.json();
+    //         console.log(data)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
+
+    // api call with axios
+    const handleSubmit3 = async () => {
+        let payload = {
+            username: 'mor_2314',
+            password: "83r5^_"
+        }
         try {
             let url = 'https://fakestoreapi.com/auth/login'
-            let response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: 'mor_2314',
-                    password: "83r5^_",
-                })
-            });
-            let data = await response.json();
-            console.log(data)
-        } catch (err) {
-            console.log(err)
+
+            let res = await axios.post(url, payload)
+            router.push("/")
+            console.log(res?.data)
+        } catch (error) {
+            console.log(error)
         }
     }
+
     const loginInfo = [
         { name: "username", type: "text", placeholder: "User Name", label: "User Name", value: username },
         { name: "password", type: "password", placeholder: "Password", label: "Password", value: password }
@@ -98,7 +122,7 @@ export default function SignIn() {
 
                     <div>
                         <button
-                            onClick={(e) => handleSubmit2(e)}
+                            onClick={(e) => handleSubmit3(e)}
                             type="submit"
                             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
